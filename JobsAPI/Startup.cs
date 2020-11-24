@@ -25,6 +25,8 @@ namespace JobsAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
             services.AddControllers();
         }
 
@@ -35,9 +37,16 @@ namespace JobsAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(x => {
+                x.SwaggerEndpoint("/swagger/v1/swagger.json", "Jobs API v1");
+            });
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
@@ -46,6 +55,8 @@ namespace JobsAPI
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }
