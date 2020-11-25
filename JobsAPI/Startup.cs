@@ -1,3 +1,5 @@
+using JobsAPI.Models;
+using JobsAPI.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,8 @@ namespace JobsAPI
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
             services.AddControllers();
+
+            services.AddScoped<IJobService, MockJobService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
