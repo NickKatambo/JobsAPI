@@ -22,5 +22,32 @@ namespace JobsAPI.Controllers
         {
             return Ok(_jobService.GetAllJobs());
         }
+
+        [HttpGet("/Job/{id}")]
+        public IActionResult Get(int id)
+        {
+            return Ok(_jobService.GetJobById(id));
+        }
+
+        [HttpDelete("/Job/{id}")]
+        public IActionResult DeleteJob(int id)
+        {
+            _jobService.DeleteJob(id);
+            return NoContent();
+        }
+
+        [HttpPost("/Job")]
+        public IActionResult CreateJob([FromBody]Job newJob)
+        {
+            _jobService.CreateJob(newJob);
+            return Created("job", newJob);
+        }
+
+        [HttpPut("/jobs")]
+        public IActionResult UpdateJob([FromBody]Job updateJob)
+        {
+            _jobService.UpdateJob(updateJob);
+            return Ok(updateJob);
+        }
     }
 }
