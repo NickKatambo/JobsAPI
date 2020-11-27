@@ -1,4 +1,5 @@
 ﻿using JobsAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +9,43 @@ namespace JobsAPI.Service
 {
     public class JobService : IJobService
     {
+        private readonly AppDbContext _context;
+
+        public JobService(AppDbContext context)
+        {
+            _context = context;
+        }
+
         public void CreateJob(Job job)
         {
-            throw new NotImplementedException();
+            _context.Jobs.Add(job);
+            _context.SaveChanges();
         }
 
         public void DeleteJob(int id)
         {
-            throw new NotImplementedException();
+            Job job = _context.Jobs.FirstOrDefault(x => x.Id == id);
+            if (job != null)
+            {
+                _context.Remove(job);
+            }
         }
 
         public List<Job> GetAllJobs()
         {
-            throw new NotImplementedException();
+            return _context.Jobs.ToList();
         }
 
         public Job GetJobById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Jobs.Find(id);
         }
 
         public void UpdateJob(Job job)
         {
-            throw new NotImplementedException();
+            var jobChanges = _context.Jobs.Attach(job);
+            jobChanges.State = EntityState.Modified;
+            _context.SaveChanges();
         }
     }
 }
