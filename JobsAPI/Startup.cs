@@ -3,6 +3,7 @@ using JobsAPI.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,13 @@ namespace JobsAPI
         {
             //Register SQL connection
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("JobDbConn")));
+
+            //Register authentication DbContext
+            services.AddDbContext<AppUserDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("JobDbConn")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppUserDbContext>()
+                .AddDefaultTokenProviders();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
