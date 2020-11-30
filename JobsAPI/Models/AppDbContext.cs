@@ -15,5 +15,6 @@ namespace JobsAPI.Models
         }
 
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
     }
 }
