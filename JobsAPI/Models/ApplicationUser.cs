@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace JobsAPI.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser
     {
+
     }
 }
