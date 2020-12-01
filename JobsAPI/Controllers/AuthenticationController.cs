@@ -11,10 +11,21 @@ namespace JobsAPI.Controllers
     [ApiController]
     public class AuthenticationController : Controller
     {
+        private readonly IAuthenticationService _authenticationService;
 
-        public IActionResult Post ([FromBody]ApplicationUser user)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
-            return NoContent();
+            _authenticationService = authenticationService;
+        }
+
+        public IActionResult Post ([FromBody]ApplicationUser appUser)
+        {
+            var user = _authenticationService.Authenticate(appUser.UserName, appUser.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or Password is incorrect!!!" });
+
+            return Ok(user);
         }
     }
 }
